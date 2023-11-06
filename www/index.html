@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Barcode Capture Test</title>
+        <script src="https://unpkg.com/vue@2"></script>
+        <link rel="stylesheet" type="text/css" href="/style.css"/>
+        <script type="text/x-template" id="modal-template">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
+                            <div class="modal-header">
+                                <slot name="header"></slot>
+                            </div>
+                            <div class="modal-body">
+                                <slot name="body"></slot>
+                            </div>
+                            <div class="modal-footer">
+                                <slot name="footer">
+                                    <a href="/">LINK</a>
+                                    <button class="default-button" @click.prevent="emitClose" v-text="'Close'"></button>
+                                </slot>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <button
+                    id="show-modal"
+                    v-text="'Show Modal'"
+                    class="default-button"
+                    @click.prevent="open"
+            ></button>
+            <modal
+                    v-show="showModal"
+                    @open="open"
+                    @close="close"
+            >
+                <div slot="header">
+                    <h3>Modal Title</h3>
+                    <a
+                            v-text="'Go to Another Page'"
+                            class="default-button"
+                            @click.prevent="goToPage"
+                    ></a>
+                </div>
+                <div
+                        slot="body"
+                        data-scan-preview
+                        class="scanner"
+                ></div>
+            </modal>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="module" src="index.js"></script>
+    </body>
+</html>
